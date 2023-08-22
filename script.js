@@ -22,7 +22,7 @@ const API_key = "5c1e801a98de55b805c069472e3bdc3a";
 
 weather.classList.add("hidden");
 
-weather.classList.remove("loading");
+// weather.classList.remove("loading");
 
 const fetchAPI = async (city) => {
   try {
@@ -35,6 +35,8 @@ const fetchAPI = async (city) => {
     const data = await response.json();
     console.log(data);
     displayCity(data);
+    console.log(document.body.style.backgroundImage);
+
     document.body.style.backgroundImage = `url(https://source.unsplash.com/1600x900/?${data.name})`;
     weather.classList.remove("loading");
   } catch {
@@ -53,7 +55,17 @@ const displayCity = (data) => {
 };
 
 btn.addEventListener("click", () => {
+  weather.classList.add("loading");
   const inputValue = input.value.trim();
   fetchAPI(inputValue);
   input.value = "";
+});
+
+window.addEventListener("keydown", (e) => {
+  weather.classList.add("loading");
+  if (e.code === "Enter") {
+    const inputValue = input.value.trim();
+    fetchAPI(inputValue);
+    input.value = "";
+  }
 });
